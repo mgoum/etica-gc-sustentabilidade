@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ética, GC e Sustentabilidade — Roteiro de Prova</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;--bg2:#f5f6f8;--bg3:#eceef2;--border:#e0e3e8;--border2:#c8cdd6;
+    --text:#1a1d24;--text2:#4a5060;--text3:#8a92a0;
+    --blue:#1a6fd4;--blue-bg:#e8f0fb;--blue-border:#a8c4ee;
+    --green:#0e8a5a;--green-bg:#e6f7f0;--green-border:#7fcfb0;
+    --amber:#b06000;--amber-bg:#fdf3e0;--amber-border:#e8c070;
+    --red:#c03030;--red-bg:#fdeaea;--red-border:#e8a0a0;
+    --teal:#0a7a70;--teal-bg:#e5f6f4;--teal-border:#70c8c0;
+    --purple:#5a3ab8;--purple-bg:#f0ecfc;--purple-border:#b8a8e8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;line-height:1.6}
+
+  /* HEADER */
+  .site-header{padding:48px 40px 32px;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
+  .site-header h1{font-family:'DM Serif Display',serif;font-size:26px;font-weight:400;color:var(--text);letter-spacing:-.3px}
+  .site-header p{font-size:12px;color:var(--text3);margin-top:4px;font-family:'DM Mono',monospace}
+  .header-row{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .tag-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-family:'DM Mono',monospace;padding:3px 9px;border-radius:20px;border:1px solid var(--border2);color:var(--text2);background:var(--bg2)}
+
+  /* NAV BLOCOS */
+  .nav-blocos{display:flex;gap:8px;padding:16px 40px;border-bottom:1px solid var(--border);background:var(--bg);overflow-x:auto}
+  .nav-btn{font-size:12px;font-family:'DM Mono',monospace;padding:5px 14px;border-radius:20px;border:1px solid var(--border2);color:var(--text2);background:transparent;cursor:pointer;white-space:nowrap;transition:all .15s}
+  .nav-btn:hover,.nav-btn.active{background:var(--bg3);color:var(--text);border-color:var(--border2)}
+  .nav-btn.b1.active{border-color:var(--blue-border);color:var(--blue)}
+  .nav-btn.b2.active{border-color:var(--green-border);color:var(--green)}
+  .nav-btn.b3.active{border-color:var(--amber-border);color:var(--amber)}
+
+  /* LAYOUT */
+  .main{display:flex;gap:0;min-height:calc(100vh - 140px)}
+  .sidebar{width:220px;flex-shrink:0;padding:24px 0;border-right:1px solid var(--border);position:sticky;top:140px;height:calc(100vh - 140px);overflow-y:auto}
+  .sidebar::-webkit-scrollbar{width:3px}
+  .sidebar::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+  .sidebar-section{margin-bottom:8px}
+  .sidebar-label{font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);padding:6px 20px 4px;letter-spacing:.08em;text-transform:uppercase}
+  .sidebar-item{display:block;padding:6px 20px;font-size:12px;color:var(--text2);text-decoration:none;transition:all .12s;border-left:2px solid transparent;cursor:pointer}
+  .sidebar-item:hover{color:var(--text);background:var(--bg2);border-left-color:var(--border2)}
+  .sidebar-item.active-b1{color:var(--blue);border-left-color:var(--blue);background:var(--blue-bg)}
+  .sidebar-item.active-b2{color:var(--green);border-left-color:var(--green);background:var(--green-bg)}
+  .sidebar-item.active-b3{color:var(--amber);border-left-color:var(--amber);background:var(--amber-bg)}
+
+  /* CONTENT */
+  .content{flex:1;padding:32px 40px;max-width:860px}
+
+  /* BLOCO SECTION */
+  .bloco-section{display:none}
+  .bloco-section.visible{display:block}
+
+  .bloco-header{margin-bottom:28px}
+  .bloco-number{font-family:'DM Mono',monospace;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em}
+  .bloco-title{font-family:'DM Serif Display',serif;font-size:28px;font-weight:400;margin-top:4px;line-height:1.2}
+  .bloco-title.c1{color:var(--blue)}
+  .bloco-title.c2{color:var(--green)}
+  .bloco-title.c3{color:var(--amber)}
+
+  /* CARD */
+  .q-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden;transition:border-color .15s}
+  .q-card:hover{border-color:var(--border2)}
+  .q-card-header{padding:14px 18px;display:flex;align-items:center;gap:12px;cursor:pointer}
+  .q-num{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;padding:3px 8px;border-radius:6px;flex-shrink:0}
+  .q-num.c1{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)}
+  .q-num.c2{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+  .q-num.c3{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border)}
+  .q-question{font-size:14px;font-weight:600;color:var(--text);flex:1;line-height:1.4}
+  .q-chevron{color:var(--text3);transition:transform .2s;font-size:18px;flex-shrink:0}
+  .q-chevron.open{transform:rotate(180deg)}
+
+  .q-body{display:none;border-top:1px solid var(--border);padding:0}
+  .q-body.open{display:block}
+
+  /* RESPOSTA DIRETA */
+  .resposta-direta{padding:18px 18px 14px;border-bottom:1px solid var(--border)}
+  .resposta-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+  .resposta-texto{font-size:14px;color:var(--text);line-height:1.65}
+  .resposta-texto strong{font-weight:600;color:var(--text)}
+
+  /* CONCEITOS */
+  .conceitos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;padding:14px 18px;border-bottom:1px solid var(--border)}
+  .conceito-pill{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:10px 12px}
+  .conceito-key{font-size:11px;font-weight:600;font-family:'DM Mono',monospace;margin-bottom:3px}
+  .conceito-val{font-size:12px;color:var(--text2);line-height:1.45}
+  .c1 .conceito-key{color:var(--blue)}
+  .c2 .conceito-key{color:var(--green)}
+  .c3 .conceito-key{color:var(--amber)}
+
+  /* TAGS INFERIORES */
+  .q-tags{display:flex;flex-wrap:wrap;gap:8px;padding:12px 18px}
+  .tag{display:flex;align-items:flex-start;gap:7px;font-size:12px;padding:8px 12px;border-radius:8px;line-height:1.45;flex:1;min-width:200px}
+  .tag-enron{background:var(--red-bg);border:1px solid var(--red-border);color:#ff9090}
+  .tag-prova{background:var(--amber-bg);border:1px solid var(--amber-border);color:#ffc96b}
+  .tag-buscar{background:var(--teal-bg);border:1px solid var(--teal-border);color:var(--teal)}
+  .tag-icon{flex-shrink:0;font-size:14px;margin-top:1px}
+  .tag-content{flex:1}
+  .tag-content b{font-weight:600;display:block;font-size:11px;font-family:'DM Mono',monospace;margin-bottom:2px;text-transform:uppercase;letter-spacing:.05em}
+
+  /* COMBINAÇÕES */
+  .combinacoes-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--border)}
+  .combinacoes-title{font-family:'DM Serif Display',serif;font-size:22px;font-weight:400;color:var(--purple);margin-bottom:20px}
+  .combo-card{background:var(--purple-bg);border:1px solid var(--purple-border);border-radius:12px;padding:18px;margin-bottom:12px}
+  .combo-qs{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+  .combo-q{font-family:'DM Mono',monospace;font-size:11px;padding:2px 8px;border-radius:5px;background:#231d40;color:var(--purple);border:1px solid var(--purple-border)}
+  .combo-desc{font-size:13px;color:var(--text2);line-height:1.55}
+
+  /* ENRON TABLE */
+  .enron-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--border)}
+  .enron-title{font-family:'DM Serif Display',serif;font-size:22px;font-weight:400;color:var(--red);margin-bottom:20px}
+  .enron-row{display:flex;gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:8px}
+  .enron-eixo{background:var(--bg3);padding:12px 14px;font-size:12px;font-weight:600;color:var(--text);min-width:130px;border-right:1px solid var(--border);display:flex;align-items:center}
+  .enron-desc{padding:12px 14px;font-size:12px;color:var(--text2);flex:1;line-height:1.5}
+  .enron-qs{padding:12px 14px;display:flex;flex-direction:column;gap:4px;align-items:flex-end;min-width:100px;border-left:1px solid var(--border)}
+  .enron-q-tag{font-family:'DM Mono',monospace;font-size:10px;padding:2px 6px;border-radius:4px;background:var(--red-bg);color:#ff9090;border:1px solid var(--red-border);white-space:nowrap}
+
+  @media(max-width:700px){
+    .site-header{padding:24px 20px 20px}
+    .nav-blocos{padding:12px 20px}
+    .main{flex-direction:column}
+    .sidebar{width:100%;height:auto;position:static;border-right:none;border-bottom:1px solid var(--border);padding:12px 0;display:flex;overflow-x:auto;gap:0}
+    .sidebar-section{display:flex;gap:0;white-space:nowrap}
+    .sidebar-label{display:none}
+    .sidebar-item{padding:6px 14px;border-left:none;border-bottom:2px solid transparent}
+    .content{padding:24px 20px}
+    .enron-row{flex-direction:column}
+    .enron-qs{flex-direction:row;border-left:none;border-top:1px solid var(--border);justify-content:flex-start}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-row">
+    <div>
+      <h1>Ética, Governança &amp; Sustentabilidade</h1>
+      <p>FECAP 2026/1 · Ciências Contábeis · Profa. Dra. Elionor Weffort</p>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <span class="tag-pill">21 questões</span>
+      <span class="tag-pill">3 blocos</span>
+      <span class="tag-pill">Caso Enron</span>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-blocos">
+  <button class="nav-btn b1 active" onclick="showBloco(1,this)">Bloco 1 — Conceitos Éticos</button>
+  <button class="nav-btn b2" onclick="showBloco(2,this)">Bloco 2 — Profissão Contábil</button>
+  <button class="nav-btn b3" onclick="showBloco(3,this)">Bloco 3 — GC e Sustentabilidade</button>
+  <button class="nav-btn" onclick="showBloco(4,this)">🔗 Combinações</button>
+  <button class="nav-btn" onclick="showBloco(5,this)">🔥 Mapa Enron</button>
+</nav>
+
+<div class="main">
+  <nav class="sidebar" id="sidebar"></nav>
+  <main class="content" id="content"></main>
+</div>
+
+<script>
+const DATA = {
+  blocos: [
+    {
+      id: 1, color: "c1", label: "Bloco 1", title: "Ética — Conceitos Fundamentais",
+      questions: [
+        {
+          q: "Q1", title: "O que é ética? Como se diferencia de moral?",
+          resposta: `A <strong>ética</strong> é a reflexão racional e filosófica sobre a conduta humana — tem dimensão <strong>teórica, crítica e normativa</strong>, buscando princípios universais ("por que isso é certo ou errado?"). Funciona como "lentes" para analisar <strong>problemas morais</strong>. A <strong>moral</strong> é o conjunto de normas e costumes que orientam o comportamento em uma sociedade — tem dimensão <strong>prática, vivida e histórica</strong> ("o que é considerado certo nesta sociedade?"). A moral é o <em>objeto de estudo</em> da ética.`,
+          conceitos: [
+            {k:"Ética",v:"Teórica, crítica e normativa — reflexão filosófica sobre a conduta"},
+            {k:"Moral",v:"Prática, vivida e histórica — normas e costumes de um grupo"},
+            {k:"Ética aplicada",v:"Uso das lentes éticas em problemas morais reais"}
+          ],
+          enron: "Enron tinha código de ética exemplar — mas a cultura praticava o oposto, sem nenhuma reflexão ética real.",
+          prova: "Aplicar 'ética aplicada' a um dilema contábil real ou ao Caso Enron."
+        },
+        {
+          q: "Q2", title: "Por que existem normas de comportamento em sociedade?",
+          resposta: `Indivíduos em sociedade têm <strong>crenças, valores e interesses conflitantes</strong>. Essa divergência gera a <strong>necessidade de minimizar conflitos</strong> e garantir que objetivos comuns sejam alcançados. Surgem, assim, as <strong>regras de comportamento</strong> — normas morais e legais que orientam a conduta e tornam possível a convivência organizada.`,
+          conceitos: [
+            {k:"Interesses conflitantes",v:"Ponto de partida — indivíduos têm valores divergentes"},
+            {k:"Necessidade de minimizar conflitos",v:"Motor que justifica a criação de normas"},
+            {k:"Regras de comportamento",v:"Resultado: normas morais e legais que orientam a conduta"}
+          ],
+          enron: "Ausência de normas internalizadas na Enron permitiu que interesses pessoais prevalecessem sobre os coletivos.",
+          prova: "Relacionar falta de normas morais internalizadas com mau funcionamento de empresas."
+        },
+        {
+          q: "Q3", title: "Diferenças entre normas morais e normas legais",
+          resposta: `A <strong>norma legal</strong> é oficial, escrita, e sua violação gera sanção do Estado (multa, prisão). A <strong>norma moral</strong> é informal — sanção é reprovação social ou peso da consciência. Ponto crítico: <strong>nem tudo que é legal é moralmente aceitável</strong>. Esse gap é o modelo da <strong>Dupla Moralidade</strong> (Srour): normas oficiais são "inocências" para a Moral da Integridade, mas "transgressões" para a Moral do Oportunismo — e vice-versa para as normas oficiosas.`,
+          conceitos: [
+            {k:"Norma legal",v:"Oficial, escrita; sanção = Estado"},
+            {k:"Norma moral",v:"Informal; sanção = consciência ou reprovação social"},
+            {k:"Dupla Moralidade (Srour)",v:"Moral da Integridade vs. Moral do Oportunismo"}
+          ],
+          enron: "Enron usou brechas legais (SPEs fora do balanço) que eram eticamente inaceitáveis.",
+          prova: "Identificar 'dupla moralidade': o que é legal por brecha não é necessariamente ético."
+        },
+        {
+          q: "Q4", title: "O que é dilema ético? Tipos e exemplos.",
+          resposta: `Dilema ético é uma <strong>situação em que o profissional não sabe o que é certo fazer</strong> (diferente de racionalização, quando sabe mas justifica o contrário). Os três tipos, conforme os slides: <strong>Valores</strong> (quais bens proteger?), <strong>Destinatários</strong> (a quem devo lealdade?) e <strong>Meios</strong> (os fins justificam meios ilegítimos?).`,
+          conceitos: [
+            {k:"Dilema de Valores",v:"Quais bens ou princípios devem ser protegidos?"},
+            {k:"Dilema de Destinatários",v:"A quem devo lealdade? (organização vs. público)"},
+            {k:"Dilema de Meios",v:"Os fins justificam meios ilegítimos?"}
+          ],
+          enron: "Auditores Arthur Andersen: dilema de Destinatários — lealdade à Enron (cliente) ou ao mercado (público)?",
+          prova: "Pedir exemplos práticos de cada tipo usando o Caso Enron."
+        },
+        {
+          q: "Q5", title: "Leis e normas bastam para garantir comportamento ético?",
+          resposta: `<strong>Não.</strong> Normas excessivas geram <strong>atrofia de competência</strong>: ao codificar todos os comportamentos desejáveis e indesejáveis, o sistema de vigilância pode levar o profissional a ignorar situações não previstas, limitando sua capacidade de gerenciar ambiguidades éticas. O comportamento ético depende de: (1) cultura organizacional que não tolere desvios e (2) <strong>valores virtuosos</strong> — agir certo por convicção, não por medo de punição.`,
+          conceitos: [
+            {k:"Atrofia de competência",v:"Excesso de normas → profissional ignora ambiguidades éticas não previstas (Costa & Wood, 2012)"},
+            {k:"Cultura organizacional",v:"Deve não tolerar desvios para ética funcionar"},
+            {k:"Valores virtuosos",v:"Normas implícitas internas virtuosas levam ao auto-controle ético (Costa & Wood, 2012)"}
+          ],
+          enron: "Enron: código de ética modelo + cultura 'resultados a qualquer preço' = lei como maquiagem.",
+          prova: "Lei sozinha não basta — é necessária internalização de valores + cultura ética."
+        }
+      ]
+    },
+    {
+      id: 2, color: "c2", label: "Bloco 2", title: "Profissão Contábil e Ética",
+      questions: [
+        {
+          q: "Q6", title: "O que é profissão regulamentada? Como se aplica à contabilidade?",
+          resposta: `Profissão regulamentada é uma <strong>forma de contrato social entre a profissão e o público em geral</strong>: a sociedade concede privilégios ao órgão (controle de admissão, fiscalização) e, em troca, a profissão garante padrões mínimos de qualidade. No Brasil, o <strong>CFC</strong> e os <strong>CRCs</strong> fiscalizam contadores, aplicando sanções administrativas (cassação, suspensão, multa), civis e criminais. Base legal: <strong>Decreto-lei 9.295/46</strong>.`,
+          conceitos: [
+            {k:"Contrato social",v:"Profissão ganha privilégios; público ganha padrões mínimos"},
+            {k:"CFC / CRCs",v:"Fiscalizam e aplicam sanções éticas e técnicas"},
+            {k:"Tipos de sanção",v:"Administrativa (CFC), civil e criminal (Judiciário)"}
+          ],
+          enron: "Fraudes Enron → criação da Lei SOX — endurecimento regulatório global para a profissão.",
+          prova: "Identificar instâncias de punição (CFC, Judiciário) e tipos de sanção.",
+          buscar: "Decreto-lei 9.295/46 — criação do CFC e regulamentação da profissão contábil"
+        },
+        {
+          q: "Q7", title: "O que caracteriza a ética profissional do contador?",
+          resposta: `O contador atua como <strong>guardião da confiança</strong> nos mercados: reduz a <strong>assimetria informacional</strong> entre quem produz e quem usa a informação contábil. Por isso, sua responsabilidade é prioritariamente com o <strong>interesse público</strong> — acima do interesse do cliente que o contratou.`,
+          conceitos: [
+            {k:"Guardião da confiança",v:"Contador garante fidedignidade da informação"},
+            {k:"Assimetria informacional",v:"Reduzida pela contabilidade transparente"},
+            {k:"Interesse público > cliente",v:"Lealdade primordial é com a sociedade"}
+          ],
+          enron: "Arthur Andersen abandonou o papel de guardião — priorizou honorários da Enron ao invés do mercado.",
+          prova: "Lealdade ao interesse público deve superar a lealdade ao cliente."
+        },
+        {
+          q: "Q8", title: "Princípios éticos do contador (IFAC/CFC — NBC PG 01)",
+          resposta: `São cinco princípios (NBC PG 01): <strong>Integridade</strong> (ser franco e honesto em todos os relacionamentos), <strong>Objetividade</strong> (não permitir viés ou conflito de interesse), <strong>Competência profissional e devido zelo</strong> (manter conhecimento atualizado e agir diligentemente), <strong>Sigilo Profissional</strong> (não divulgar informações a terceiros sem direito ou dever legal) e <strong>Comportamento Profissional</strong> (cumprir leis e evitar ações que desacreditem a profissão).`,
+          conceitos: [
+            {k:"Integridade + Objetividade",v:"Honestidade e ausência de viés ou conflito"},
+            {k:"Competência profissional e devido zelo",v:"Atualização técnica + diligência"},
+            {k:"Sigilo Profissional",v:"Não divulgar sem direito/dever legal — base da confiança"}
+          ],
+          enron: "Arthur Andersen violou a objetividade: consultoria e auditoria simultâneas geraram conflito de interesse direto.",
+          prova: "Relacionar a violação de cada princípio com uma fraude — especialmente objetividade → Andersen.",
+          buscar: "NBC PG 01 (CFC) — texto completo dos 5 princípios éticos do contador"
+        },
+        {
+          q: "Q9", title: "A quem o contador deve lealdade?",
+          resposta: `Embora contratado por um cliente, a <strong>lealdade primordial do contador é com a sociedade</strong>. Ele serve a <strong>múltiplos stakeholders</strong> — investidores, governo, empregados, credores — e deve garantir que a informação contábil seja fidedigna para todos, não apenas conveniente para quem paga os honorários.`,
+          conceitos: [
+            {k:"Lealdade primordial",v:"Sociedade e interesse público"},
+            {k:"Múltiplos stakeholders",v:"Investidores, governo, empregados, credores"},
+            {k:"Fidedignidade",v:"Informação deve refletir a realidade"}
+          ],
+          enron: "Auditores Enron priorizaram o cliente — suprimiram relatórios que revelariam a fraude ao mercado.",
+          prova: "Questão clássica: quem paga os honorários (cliente) vs. quem usa a informação (público)."
+        },
+        {
+          q: "Q10", title: "O que é conflito de interesses?",
+          resposta: `Conflito de interesses ocorre quando um <strong>interesse secundário</strong> (pessoal, financeiro, familiar) influencia indevidamente o <strong>julgamento profissional</strong>. Compromete a objetividade: o contador pode omitir ou distorcer dados para beneficiar a si próprio ou a terceiros a ele ligados.`,
+          conceitos: [
+            {k:"Interesse secundário",v:"Financeiro/pessoal que desvia o julgamento"},
+            {k:"Comprometimento",v:"Objetividade prejudicada → dados omitidos ou distorcidos"},
+            {k:"Prevenção",v:"Separar funções e declarar impedimentos formalmente"}
+          ],
+          enron: "CFO Andy Fastow: geria SPEs que negociavam com a própria Enron — conflito de interesses direto e deliberado.",
+          prova: "Pode aparecer com o Caso Enron (Fastow) ou com situações hipotéticas de auditoria."
+        },
+        {
+          q: "Q11", title: "O que é independência profissional?",
+          resposta: `Independência é a postura de <strong>ceticismo e isenção</strong> que permite ao profissional emitir conclusão sem interferência de interesses externos. Em <strong>auditoria</strong>, garante que o relatório seja confiável para o mercado. Em <strong>perícia</strong>, garante a imparcialidade da prova judicial. Ameaças: prestação de serviços múltiplos ao mesmo cliente.`,
+          conceitos: [
+            {k:"Ceticismo profissional",v:"Questionar evidências sem viés"},
+            {k:"Independência em auditoria",v:"Relatório confiável para o mercado de capitais"},
+            {k:"Ameaças à independência",v:"Consultoria + auditoria simultâneas ao mesmo cliente"}
+          ],
+          enron: "Arthur Andersen: prestava consultoria milionária e auditoria para a Enron ao mesmo tempo — independência zero.",
+          prova: "Situações que ameaçam independência — ex: serviços múltiplos ao mesmo cliente."
+        },
+        {
+          q: "Q12", title: "Por que o sigilo profissional é importante? Há exceções?",
+          resposta: `O <strong>Sigilo Profissional</strong> obriga o contador a não divulgar informações obtidas em relacionamentos profissionais a terceiros. A exceção, conforme a <strong>NBC PG 01</strong>, ocorre quando há <strong>"direito ou dever legal ou profissional de divulgação"</strong> — como nos casos de obrigação legal (ex: lavagem de dinheiro) ou determinação judicial. O sigilo também não pode ser usado para obter vantagem pessoal ilícita.`,
+          conceitos: [
+            {k:"Sigilo",v:"Não divulgar informações profissionais a terceiros"},
+            {k:"Exceção (NBC PG 01)",v:"Direito ou dever legal ou profissional de divulgação"},
+            {k:"Limite",v:"Sigilo não protege crime nem gera vantagem pessoal ilícita"}
+          ],
+          enron: "O sigilo não justificava acobertar fraude — o papel do whistleblower no Enron ilustra o limite ético do sigilo.",
+          prova: "Relacionar sigilo com prevenção de crimes financeiros e o papel dos whistleblowers."
+        },
+        {
+          q: "Q17", title: "Qual a finalidade de um código de ética profissional?",
+          resposta: `O código de ética funciona como <strong>instrumento de controle social da profissão</strong>: unifica condutas, reduz ambiguidades do dia a dia e protege a reputação da classe perante a sociedade. Porém, há uma contradição clássica: profissionais que valorizam o código mas não se comprometem a cumpri-lo.`,
+          conceitos: [
+            {k:"Controle social",v:"Unifica condutas da classe profissional"},
+            {k:"Redução de ambiguidade",v:"Guia em situações de dúvida ética"},
+            {k:"Contradição clássica",v:"Valorizar o código ≠ comprometer-se a cumpri-lo"}
+          ],
+          enron: "Enron tinha um dos códigos de ética mais completos do mercado — e uma das culturas mais antiéticas.",
+          prova: "Explorar a contradição: profissionais que acham o código importante mas não se predispõem a cumprir."
+        }
+      ]
+    },
+    {
+      id: 3, color: "c3", label: "Bloco 3", title: "Ética, Governança e Sustentabilidade",
+      questions: [
+        {
+          q: "Q18", title: "O que é responsabilidade social corporativa (RSC)?",
+          resposta: `A RSC <strong>reflete no conteúdo das decisões</strong> da empresa (<strong>"o que fazer"</strong>) e no seu <strong>processo de tomada de decisão</strong> (<strong>"como fazer"</strong>). Difere da filantropia pura: enquanto a filantropia é pontual e externa, a RSC permeia a gestão estratégica — está em como e no que a empresa decide fazer no cotidiano. A empresa socialmente responsável responde a múltiplos <strong>stakeholders</strong> (clientes, fornecedores, credores, governo, comunidade), e não apenas aos acionistas.`,
+          conceitos: [
+            {k:"RSC",v:"Reflete no 'o que fazer' (conteúdo das decisões) e no 'como fazer' (processo de tomada de decisão)"},
+            {k:"Não é filantropia",v:"RSC está no 'como e o que fazer', não em doações"},
+            {k:"Gestão estratégica",v:"Impactos sobre todos os stakeholders são geridos"}
+          ],
+          enron: "Enron ignorou RSC — foco total no resultado econômico de curto prazo, destruindo stakeholders internos e externos.",
+          prova: "Diferenciar RSC de filantropia pura."
+        },
+        {
+          q: "Q19", title: "Qual a importância da RSC? (Pirâmide de Carroll)",
+          resposta: `<strong>Importância interna:</strong> imagem e credibilidade interna, padroniza comportamentos, promove lealdade, orienta e justifica condutas, reduz fraudes, facilita programas de melhoria de qualidade. <strong>Importância externa:</strong> imagem e confiança junto a clientes, fornecedores, bancos e governo; melhora relacionamentos e reduz riscos. A <strong>Pirâmide de Carroll</strong> estrutura as responsabilidades em 4 camadas: <strong>Econômica</strong> (base) → <strong>Legal</strong> → <strong>Ética</strong> → <strong>Filantrópica</strong> (topo).`,
+          conceitos: [
+            {k:"Camada 1 — Econômica",v:"Ser lucrativa (base — é pré-requisito)"},
+            {k:"Camadas 2+3 — Legal+Ética",v:"Cumprir leis e agir além delas"},
+            {k:"Camada 4 — Filantrópica",v:"Contribuir voluntariamente com a sociedade"}
+          ],
+          enron: "Enron: ignorou camadas ética e filantrópica — destruiu fundos de pensão de milhares de funcionários.",
+          prova: "Conhecer as 4 camadas e classificar exemplos práticos em cada nível."
+        },
+        {
+          q: "Q20", title: "Quais as dimensões da sustentabilidade? (Triple Bottom Line)",
+          resposta: `O <strong>Triple Bottom Line</strong> define 3 dimensões: <strong>Econômica</strong> (resultados financeiros), <strong>Social</strong> (impacto nas pessoas) e <strong>Ambiental</strong> (impacto no meio ambiente). Mais recentemente incorporou-se uma 4ª: <strong>Institucional / Governança</strong> (transparência, ética e governança corporativa).`,
+          conceitos: [
+            {k:"Econômica + Social",v:"Resultados financeiros + impacto nas pessoas"},
+            {k:"Ambiental",v:"Emissões, recursos naturais, eco-impacto"},
+            {k:"Institucional/Governança (4ª)",v:"Transparência, ética e governança corporativa"}
+          ],
+          enron: "Obsessão na dimensão econômica de curto prazo; dimensão de governança completamente ignorada.",
+          prova: "Classificar indicadores: CO₂ = ambiental; diversidade no conselho = governança."
+        },
+        {
+          q: "Q21", title: "Relação entre governança corporativa e ética empresarial",
+          resposta: `A governança fornece os <strong>mecanismos estruturais</strong> para que valores éticos sejam praticados. Sem ética, os controles tornam-se mera "maquiagem". Os <strong>5 pilares IBGC</strong>: <strong>Equidade</strong> (fairness), <strong>Transparência</strong> (disclosure), <strong>Prestação de contas/responsabilidade</strong> (accountability), <strong>Conformidade com as normas</strong> (compliance) e <strong>Responsabilidade corporativa</strong>.`,
+          conceitos: [
+            {k:"Accountability",v:"Prestação de contas/responsabilidade (mais cobrado)"},
+            {k:"Disclosure + Equidade",v:"Transparência + tratamento justo entre partes"},
+            {k:"Compliance + Resp. Corporativa",v:"Conformidade com as normas + responsabilidade social"}
+          ],
+          enron: "Disclosure: violado com SPEs fora do balanço. Equity: violado com insider trading. Conselho omisso.",
+          prova: "Foco no pilar Accountability — é o mais cobrado."
+        },
+        {
+          q: "Q22", title: "Teoria Contratual da Firma (Sunder) e o papel da contabilidade",
+          resposta: `A empresa é um <strong>nexo de contratos</strong> entre agentes (trabalhadores, gestores, investidores, governo). Há <strong>assimetria informacional</strong> entre eles. A contabilidade reduz essa assimetria, <strong>monitorando o cumprimento dos contratos</strong> e equilibrando a relação entre principal (proprietário) e agente (gestor).`,
+          conceitos: [
+            {k:"Nexo de contratos",v:"Empresa = rede de relações contratuais entre agentes"},
+            {k:"Assimetria informacional",v:"Agentes têm informações diferentes entre si"},
+            {k:"Papel da contabilidade",v:"Monitorar contratos e reduzir assimetria"}
+          ],
+          enron: "Fraude contábil Enron quebrou o contrato de agência proprietários↔gestores — gestores esconderam a realidade.",
+          prova: "Como a fraude contábil quebra o 'contrato de agência' entre proprietários e gestores.",
+          buscar: "Sunder — 'Teoria da Contabilidade e do Controle', caps. 1 e 2 (disponível na Biblioteca FECAP)"
+        },
+        {
+          q: "Q23", title: "Lucro e práticas éticas podem ser conciliados?",
+          resposta: `<strong>Sim.</strong> A responsabilidade econômica é o <strong>primeiro degrau</strong> da responsabilidade social (base da Pirâmide de Carroll). Práticas éticas garantem <strong>geração de valor no longo prazo</strong>. O lucro ético é sustentável; o lucro oportunista é efêmero — destrói o valor que criou.`,
+          conceitos: [
+            {k:"Lucro ético",v:"Sustentável no longo prazo — gera valor real"},
+            {k:"Lucro oportunista",v:"Efêmero — destrói valor no longo prazo"},
+            {k:"Pirâmide Carroll",v:"Econômica é base — não dispensa as demais camadas"}
+          ],
+          enron: "Ações Enron: ~US$90 → zero em meses. Lucro oportunista destruiu empresa e destruiu investidores.",
+          prova: "Argumento central: lucro ético é sustentável; oportunismo destrói valor."
+        },
+        {
+          q: "Q24", title: "Como escândalos contábeis comprometem a confiança no mercado?",
+          resposta: `Geram <strong>crise de reputação setorial</strong>: elevam a percepção de risco, aumentam o custo de capital e levam ao endurecimento regulatório. A resposta institucional ao Caso Enron foi a <strong>Lei Sarbanes-Oxley (SOX)</strong> — que aumentou as exigências de controles internos e responsabilização de executivos.`,
+          conceitos: [
+            {k:"Crise de reputação setorial",v:"Toda a profissão paga pelo desvio de um"},
+            {k:"Custo de capital",v:"Percepção de risco maior → capital mais caro"},
+            {k:"Lei SOX",v:"Resposta regulatória ao Enron — maior controle e responsabilização"}
+          ],
+          enron: "Arthur Andersen — uma das Big Five — foi destruída em semanas após o escândalo Enron.",
+          prova: "Conectar colapso da Arthur Andersen com consequências sistêmicas para o mercado."
+        },
+        {
+          q: "Q25", title: "Por que reputação é um ativo ligado à ética?",
+          resposta: `Reputação é a <strong>percepção do mercado sobre a integridade da firma</strong> e compõe seu valor econômico. Um desvio ético gera <strong>risco reputacional</strong> capaz de provocar perda de clientes, parceiros e desvalorização total das ações. Reputação sólida = <strong>resiliência estratégica</strong> em momentos de crise.`,
+          conceitos: [
+            {k:"Reputação como ativo",v:"Percepção de integridade compõe o valor da firma"},
+            {k:"Risco reputacional",v:"Desvio ético → perda de clientes e desvalorização"},
+            {k:"Resiliência estratégica",v:"Reputação sólida protege nos momentos de crise"}
+          ],
+          enron: "Enron: ações foram de ~US$90 a zero após revelação da fraude — reputação destruída = empresa destruída.",
+          prova: "Relacionar reputação com resiliência estratégica de longo prazo."
+        }
+      ]
+    }
+  ],
+  combinacoes: [
+    {
+      qs: ["Q3","Q4","Q7"],
+      title: "Ética e Prática Profissional",
+      desc: "Minicaso: identificar o conflito entre norma moral e legal (Q3), classificar o tipo de dilema ético (Q4) e explicar como o contador deveria ter usado seu julgamento profissional (Q7). Use Enron como fio condutor."
+    },
+    {
+      qs: ["Q10","Q11","Q22"],
+      title: "Governança e Teoria da Agência",
+      desc: "Explicar como conflito de interesses (Q10) e falta de independência (Q11) comprometem o 'nexo de contratos' da firma — Teoria dos Contratos de Sunder (Q22). Argumento central: auditoria independente como garantia do equilíbrio contratual."
+    },
+    {
+      qs: ["Q18","Q20","Q25"],
+      title: "Sustentabilidade e Estratégia",
+      desc: "Definir RSC (Q18), listar as dimensões do Triple Bottom Line (Q20) e explicar por que reputação é o ativo que garante a geração de valor no longo prazo (Q25)."
+    },
+    {
+      qs: ["Q5","Q24"],
+      title: "Confiança e Regulação",
+      desc: "Questionar se apenas a existência de leis como a Lei SOX (Q24) garante ética, ou se é necessária mudança na cultura organizacional para restaurar a confiança (Q5). Argumento: lei sem internalização de valores não basta."
+    }
+  ],
+  enronMap: [
+    {eixo:"Ética", desc:"Executivos adotaram 'moral do oportunismo'; código de ética era peça de marketing, não guia de conduta.", qs:["Q3","Q4","Q5","Q17"]},
+    {eixo:"Profissão Contábil", desc:"Arthur Andersen: auditoria + consultoria simultâneas destruíram independência. CFO Fastow: conflito de interesses direto com as SPEs.", qs:["Q7","Q8","Q10","Q11"]},
+    {eixo:"Governança", desc:"Disclosure violado: SPEs usadas para ocultar dívidas do balanço. Conselho de administração omisso. Sem accountability real.", qs:["Q21","Q22"]},
+    {eixo:"Sustentabilidade", desc:"Foco obsessivo no lucro de curto prazo. Destruiu fundos de pensão de funcionários. Colapso reputacional instantâneo.", qs:["Q19","Q20","Q23","Q24","Q25"]},
+    {eixo:"Regulação", desc:"Levou à criação da Lei Sarbanes-Oxley (SOX) e ao fim da Arthur Andersen — uma das Big Five eliminada em semanas.", qs:["Q5","Q6","Q24"]}
+  ]
+};
+
+let activeBloco = 1;
+let openCards = {};
+
+function showBloco(id, btn) {
+  activeBloco = id;
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderSidebar();
+  renderContent();
+}
+
+function renderSidebar() {
+  const sb = document.getElementById('sidebar');
+  sb.innerHTML = '';
+  if (activeBloco >= 4) return;
+  const bloco = DATA.blocos.find(b => b.id === activeBloco);
+  const sec = document.createElement('div');
+  sec.className = 'sidebar-section';
+  sec.innerHTML = `<div class="sidebar-label">${bloco.label}</div>`;
+  bloco.questions.forEach(q => {
+    const item = document.createElement('div');
+    item.className = 'sidebar-item';
+    item.textContent = q.q + ' — ' + q.title.substring(0,28) + (q.title.length > 28 ? '…' : '');
+    item.onclick = () => {
+      const el = document.getElementById('card-' + q.q);
+      if (el) { el.scrollIntoView({behavior:'smooth', block:'start'}); openCard(q.q); }
+    };
+    item.id = 'sb-' + q.q;
+    sec.appendChild(item);
+  });
+  sb.appendChild(sec);
+}
+
+function openCard(qid) {
+  openCards[qid] = true;
+  const body = document.getElementById('body-' + qid);
+  const chev = document.getElementById('chev-' + qid);
+  if (body) body.classList.add('open');
+  if (chev) chev.classList.add('open');
+}
+
+function toggleCard(qid) {
+  openCards[qid] = !openCards[qid];
+  const body = document.getElementById('body-' + qid);
+  const chev = document.getElementById('chev-' + qid);
+  if (body) body.classList.toggle('open', openCards[qid]);
+  if (chev) chev.classList.toggle('open', openCards[qid]);
+}
+
+function renderContent() {
+  const cont = document.getElementById('content');
+  cont.innerHTML = '';
+
+  if (activeBloco === 4) {
+    // Combinações
+    const div = document.createElement('div');
+    div.innerHTML = `<div class="bloco-header"><div class="bloco-number">Combinações estratégicas</div><div class="bloco-title" style="color:var(--purple)">Questões combinadas na prova</div></div>`;
+    DATA.combinacoes.forEach(c => {
+      const card = document.createElement('div');
+      card.className = 'combo-card';
+      card.innerHTML = `<div class="combo-qs">${c.qs.map(q=>`<span class="combo-q">${q}</span>`).join('')}<span style="font-size:13px;color:var(--text2);margin-left:4px;align-self:center">— ${c.title}</span></div><div class="combo-desc">${c.desc}</div>`;
+      div.appendChild(card);
+    });
+    cont.appendChild(div);
+    return;
+  }
+
+  if (activeBloco === 5) {
+    // Enron Map
+    const div = document.createElement('div');
+    div.innerHTML = `<div class="bloco-header"><div class="bloco-number">Caso Enron</div><div class="bloco-title" style="color:var(--red)">Mapa de conexões com o roteiro</div></div>`;
+    DATA.enronMap.forEach(row => {
+      const r = document.createElement('div');
+      r.className = 'enron-row';
+      r.innerHTML = `<div class="enron-eixo">${row.eixo}</div><div class="enron-desc">${row.desc}</div><div class="enron-qs">${row.qs.map(q=>`<span class="enron-q-tag">${q}</span>`).join('')}</div>`;
+      div.appendChild(r);
+    });
+    cont.appendChild(div);
+    return;
+  }
+
+  const bloco = DATA.blocos.find(b => b.id === activeBloco);
+  const wrapper = document.createElement('div');
+  const header = document.createElement('div');
+  header.className = 'bloco-header';
+  header.innerHTML = `<div class="bloco-number">${bloco.label}</div><div class="bloco-title ${bloco.color}">${bloco.title}</div>`;
+  wrapper.appendChild(header);
+
+  bloco.questions.forEach(q => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = 'card-' + q.q;
+
+    const cclass = bloco.color;
+
+    card.innerHTML = `
+      <div class="q-card-header" onclick="toggleCard('${q.q}')">
+        <span class="q-num ${cclass}">${q.q}</span>
+        <span class="q-question">${q.title}</span>
+        <span class="q-chevron" id="chev-${q.q}">▾</span>
+      </div>
+      <div class="q-body" id="body-${q.q}">
+        <div class="resposta-direta">
+          <div class="resposta-label">Resposta completa</div>
+          <div class="resposta-texto">${q.resposta}</div>
+        </div>
+        <div class="conceitos-grid ${cclass}">
+          ${q.conceitos.map(c=>`<div class="conceito-pill"><div class="conceito-key">${c.k}</div><div class="conceito-val">${c.v}</div></div>`).join('')}
+        </div>
+        <div class="q-tags">
+          <div class="tag tag-enron"><span class="tag-icon">🔥</span><div class="tag-content"><b>Enron</b>${q.enron}</div></div>
+          <div class="tag tag-prova"><span class="tag-icon">⚠️</span><div class="tag-content"><b>Na prova</b>${q.prova}</div></div>
+          ${q.buscar ? `<div class="tag tag-buscar" style="flex-basis:100%"><span class="tag-icon">🔎</span><div class="tag-content"><b>Buscar</b>${q.buscar}</div></div>` : ''}
+        </div>
+      </div>`;
+    wrapper.appendChild(card);
+  });
+
+  cont.appendChild(wrapper);
+}
+
+renderSidebar();
+renderContent();
+</script>
+</body>
+</html>
